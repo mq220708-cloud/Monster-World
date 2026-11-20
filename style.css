@@ -181,3 +181,57 @@
 @media(prefers-reduced-motion:reduce){
   .image-title-screen .title-art,.image-title-screen:before,.image-title-screen .title-atmosphere i{animation:none!important}
 }
+
+
+/* Tactile feedback for illustrated title menu buttons */
+.image-title-screen .title-hotspot{
+  appearance:none;
+  -webkit-tap-highlight-color:transparent;
+  transform:translateZ(0);
+  transition:transform .16s cubic-bezier(.2,.8,.25,1),filter .16s ease,background .16s ease;
+  outline:none;
+}
+.image-title-screen .title-hotspot:before,
+.image-title-screen .title-hotspot:after{
+  content:"";position:absolute;pointer-events:none;opacity:0;
+  transition:opacity .14s ease
+}
+.image-title-screen .title-hotspot:before{
+  inset:2px;border:2px solid #fff2b9;border-radius:13px;
+  box-shadow:inset 0 0 12px #fff1a866,0 0 12px #fff0a8aa,0 0 25px #8be9d477
+}
+.image-title-screen .title-hotspot:after{
+  inset:-9px;border-radius:18px;
+  background:radial-gradient(ellipse at center,#fff7c955 0, #ffe18b22 42%,transparent 72%);
+  transform:scale(.72)
+}
+.image-title-screen .title-hotspot:hover:not(:disabled){
+  filter:brightness(1.18) drop-shadow(0 0 8px #fff0a8aa);
+  transform:scale(1.025)
+}
+.image-title-screen .title-hotspot:hover:not(:disabled):before{opacity:.72}
+.image-title-screen .title-hotspot:active:not(:disabled){
+  transform:scale(.94) translateY(3px);
+  filter:brightness(1.32) saturate(1.18) drop-shadow(0 0 13px #fff0a8);
+  background:#fff5bd35
+}
+.image-title-screen .title-hotspot:active:not(:disabled):before{opacity:1;inset:4px}
+.image-title-screen .title-hotspot:active:not(:disabled):after{
+  opacity:1;animation:menu-tap-burst .42s ease-out both
+}
+.image-title-screen .title-hotspot:focus-visible{
+  outline:2px solid #fff7c8;outline-offset:5px;
+  filter:brightness(1.18) drop-shadow(0 0 8px #fff0a8aa)
+}
+.image-title-screen .title-hotspot:disabled{filter:grayscale(.45);opacity:.72}
+@keyframes menu-tap-burst{
+  0%{opacity:.95;transform:scale(.72)}
+  100%{opacity:0;transform:scale(1.2)}
+}
+@media(hover:none){
+  .image-title-screen .title-hotspot:hover:not(:disabled){filter:none;transform:none}
+  .image-title-screen .title-hotspot:hover:not(:disabled):before{opacity:0}
+}
+@media(prefers-reduced-motion:reduce){
+  .image-title-screen .title-hotspot,.image-title-screen .title-hotspot:before,.image-title-screen .title-hotspot:after{transition:none;animation:none!important}
+}
