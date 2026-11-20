@@ -65,3 +65,49 @@
 .close-mark:after{content:"";position:absolute;inset:0;background:currentColor;transform:rotate(90deg)}
 @media(max-height:700px){.title-content{padding-top:max(15px,env(safe-area-inset-top));padding-bottom:max(12px,env(safe-area-inset-bottom))}.title-kicker{font-size:8px}.title-showcase{height:clamp(112px,20vh,145px)}.pixel-sprout{transform:scale(.86)}.title-menu{gap:7px}.menu-button{min-height:44px}}
 @media(min-width:600px){.title-content{max-width:520px;margin:auto}.title-showcase{height:190px}.title-menu{width:310px}}
+
+
+/* Title screen polish — Aetheria logo + three custom starter sprites */
+.title-screen{background:#6ea9a0}
+.title-sky{background:linear-gradient(180deg,#5ba5c3 0%,#9bc9bd 43%,#e0d99c 72%,#5d9656 100%)}
+.title-sun{width:46px;height:46px;top:8%;right:16%;box-shadow:0 0 0 7px #ffe49a35,0 0 0 15px #ffe49a18,0 0 35px #ffe9b688}
+.title-mountain.mountain-far{height:39%;bottom:24%;background:#83a88a}
+.title-mountain.mountain-near{height:32%;bottom:17%;background:#497c66}
+.title-content{padding-left:18px;padding-right:18px}
+.title-kicker{padding:6px 12px;border:1px solid #f4e5b477;background:#315c4b66;box-shadow:2px 2px 0 #345d47;border-radius:2px}
+.game-logo{position:relative;margin-top:2px;padding:7px 14px 10px;font-size:clamp(38px,11.5vw,57px);letter-spacing:-.08em;color:#fff3bd;-webkit-text-stroke:1px #79563a;text-shadow:2px 2px 0 #fff0bd,4px 4px 0 #bd8550,7px 7px 0 #52724a,9px 11px 0 #294d40,11px 13px 0 #1e3c35}
+.game-logo strong{color:#fff8dc;-webkit-text-stroke:1px #725039;text-shadow:2px 2px 0 #fff0bd,4px 4px 0 #d19b58,7px 7px 0 #52724a,9px 11px 0 #294d40,11px 13px 0 #1e3c35}
+.title-subtitle{padding:5px 13px;background:#315b4b9c;border:1px solid #e8e5b277;box-shadow:2px 2px 0 #345d47}
+.title-showcase{height:clamp(140px,25vh,190px);margin-top:9px}
+.starter-trio{position:relative;width:min(100%,330px);height:100%;display:flex;align-items:center;justify-content:space-around;z-index:2}
+.starter{position:relative;width:82px;height:104px;image-rendering:pixelated;filter:drop-shadow(0 6px 0 #284d3b55);animation:starter-float 2.7s ease-in-out infinite}
+.starter:nth-child(2){animation-delay:-.9s;transform:translateY(-7px) scale(1.08);z-index:2}
+.starter:nth-child(3){animation-delay:-1.7s}
+.starter .creature-body{position:absolute;left:20px;top:37px;width:43px;height:39px;background:#e58a4e;box-shadow:-6px 0 #c96843,6px 0 #c96843,0 -6px #f4b45d,0 7px #b65c3d,-3px 9px #b65c3d,5px 9px #b65c3d}
+.starter .creature-ear{position:absolute;top:24px;width:15px;height:21px;background:#c96843}
+.starter .ear-a{left:21px;transform:rotate(-16deg);box-shadow:0 -5px #f3bd6a}
+.starter .ear-b{right:15px;transform:rotate(16deg);box-shadow:0 -5px #f3bd6a}
+.starter .creature-eye{position:absolute;top:51px;width:5px;height:7px;background:#273e39;z-index:2}
+.starter .eye-a{left:32px}.starter .eye-b{right:22px}
+.starter span{position:absolute;bottom:0;left:50%;transform:translateX(-50%);font:900 8px monospace;letter-spacing:.16em;color:#fff3d0;text-shadow:1px 2px #31563e}
+.fire-starter .creature-tail{position:absolute;right:1px;top:60px;width:18px;height:20px;background:#e5a34b;transform:rotate(35deg);box-shadow:0 -8px 0 -3px #e56f3d,4px -13px 0 -5px #ffd06e}
+.fire-starter .creature-flame{position:absolute;left:35px;top:9px;width:14px;height:23px;background:#f6c65f;clip-path:polygon(50% 0,100% 55%,78% 100%,22% 100%,0 55%);box-shadow:0 0 14px #ffb44b}
+.grass-starter .creature-body{background:#a4c967;box-shadow:-6px 0 #78a84f,6px 0 #78a84f,0 -6px #c0dc7b,0 7px #719a48,-3px 9px #719a48,5px 9px #719a48}
+.grass-starter .creature-ear{background:#75a74c}
+.grass-starter .ear-a,.grass-starter .ear-b{box-shadow:0 -5px #b8d77a}
+.grass-starter .creature-leaf{position:absolute;top:7px;width:20px;height:22px;background:#7eae50;z-index:2}
+.grass-starter .leaf-a{left:23px;transform:rotate(-35deg);box-shadow:-4px -5px #9bc866}
+.grass-starter .leaf-b{right:13px;top:3px;transform:rotate(30deg);background:#9bc866;box-shadow:4px -5px #9bc866}
+.water-starter .creature-body{background:#78b9d0;box-shadow:-6px 0 #4b91b4,6px 0 #4b91b4,0 -6px #a4d9df,0 7px #3f7fa4,-3px 9px #3f7fa4,5px 9px #3f7fa4}
+.water-starter .creature-ear{background:#4b91b4}
+.water-starter .ear-a,.water-starter .ear-b{box-shadow:0 -5px #a4d9df}
+.water-starter .creature-tail{position:absolute;right:0;top:39px;width:18px;height:23px;background:#80c6d8;clip-path:polygon(50% 0,100% 35%,80% 100%,20% 100%,0 35%)}
+.water-starter .creature-fin{position:absolute;left:36px;top:22px;width:15px;height:17px;background:#b4e2e1;clip-path:polygon(50% 0,100% 100%,0 100%)}
+@keyframes starter-float{0%,100%{translate:0 0}50%{translate:0 -5px}}
+.title-menu{margin-bottom:10px;gap:9px}
+.menu-button{min-height:48px;font-size:12px;letter-spacing:.1em}
+.menu-button.primary{background:linear-gradient(180deg,#f4d17d,#dca34e);border-color:#fff0c5;box-shadow:0 4px 0 #96643a,0 7px 0 #624b36,0 10px 18px #244c3d55}
+.menu-button.secondary{background:linear-gradient(180deg,#4b8060,#315b47);box-shadow:0 4px 0 #234536,0 7px 0 #18392f}
+.menu-button.text-button{min-height:31px}
+.title-footer{padding:5px 10px;background:#315b4b77;border-radius:2px}
+@media(max-height:700px){.title-showcase{height:clamp(118px,20vh,145px)}.starter{transform:scale(.86)}.starter:nth-child(2){transform:translateY(-4px) scale(.94)}.game-logo{font-size:clamp(34px,10vw,49px)}}
