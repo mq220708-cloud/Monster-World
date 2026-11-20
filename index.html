@@ -5,53 +5,19 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
   <meta name="theme-color" content="#17251d">
   <title>Monster World – Greenfield</title>
-  <link rel="stylesheet" href="style.css?v=20261120-title2">
+  <link rel="stylesheet" href="style.css?v=20261120-art1">
 </head>
 <body>
   <main id="game-shell" aria-label="Monster World">
     <canvas id="game" aria-label="Bản đồ Greenfield"></canvas>
-    <section id="title-screen" class="title-screen" aria-label="Màn hình mở đầu Monster World">
-      <div class="title-sky" aria-hidden="true">
-        <div class="title-sun"></div>
-        <div class="title-cloud cloud-a"></div>
-        <div class="title-cloud cloud-b"></div>
-        <div class="title-mountain mountain-far"></div>
-        <div class="title-mountain mountain-near"></div>
-        <div class="title-forest"></div>
-        <div class="title-ground"></div>
+    <section id="title-screen" class="title-screen image-title-screen" aria-label="Màn hình mở đầu Monster World">
+      <img class="title-art" src="assets/monster-world-title.webp?v=20261120-art1" alt="Màn hình Monster World với ba sinh vật khởi đầu và các nút Bắt đầu hành trình, Tiếp tục, Cài đặt">
+      <div class="title-hotspots" aria-label="Menu chính">
+        <button id="start-button" class="title-hotspot start-hotspot" aria-label="Bắt đầu hành trình"></button>
+        <button id="continue-button" class="title-hotspot continue-hotspot" aria-label="Tiếp tục" disabled></button>
+        <button id="settings-button" class="title-hotspot settings-hotspot" aria-label="Cài đặt"></button>
       </div>
-      <div class="title-content">
-        <p class="title-kicker">MỘT THẾ GIỚI ĐANG THỨC TỈNH</p>
-        <h1 class="game-logo"><span>MONSTER</span><strong>WORLD</strong></h1>
-        <p class="title-subtitle">Khám phá · Kết bạn · Trưởng thành</p>
-        <div class="title-showcase" aria-hidden="true">
-          <div class="showcase-glow"></div>
-          <div class="starter-trio">
-            <div class="starter fire-starter"><i class="creature-tail"></i><i class="creature-body"></i><i class="creature-ear ear-a"></i><i class="creature-ear ear-b"></i><i class="creature-eye eye-a"></i><i class="creature-eye eye-b"></i><i class="creature-flame"></i><span>LỬA</span></div>
-            <div class="starter grass-starter"><i class="creature-leaf leaf-a"></i><i class="creature-leaf leaf-b"></i><i class="creature-body"></i><i class="creature-ear ear-a"></i><i class="creature-ear ear-b"></i><i class="creature-eye eye-a"></i><i class="creature-eye eye-b"></i><span>CỎ</span></div>
-            <div class="starter water-starter"><i class="creature-tail"></i><i class="creature-body"></i><i class="creature-ear ear-a"></i><i class="creature-ear ear-b"></i><i class="creature-eye eye-a"></i><i class="creature-eye eye-b"></i><i class="creature-fin"></i><span>NƯỚC</span></div>
-          </div>
-          <div class="pixel-sprout" hidden>
-            <i class="sprout-leaf leaf-left"></i>
-            <i class="sprout-leaf leaf-right"></i>
-            <i class="sprout-body"></i>
-            <i class="sprout-cheek cheek-left"></i>
-            <i class="sprout-cheek cheek-right"></i>
-            <i class="sprout-eye eye-left"></i>
-            <i class="sprout-eye eye-right"></i>
-            <i class="sprout-foot foot-left"></i>
-            <i class="sprout-foot foot-right"></i>
-          </div>
-          <span class="showcase-name">NHỮNG NGƯỜI BẠN ĐANG CHỜ</span>
-        </div>
-        <nav class="title-menu" aria-label="Menu chính">
-          <button id="start-button" class="menu-button primary">BẮT ĐẦU HÀNH TRÌNH</button>
-          <button id="continue-button" class="menu-button secondary" disabled>TIẾP TỤC</button>
-          <small id="continue-note" class="continue-note">Chưa có hành trình được lưu</small>
-          <button id="settings-button" class="menu-button text-button">CÀI ĐẶT</button>
-        </nav>
-        <p class="title-footer">AETHERIA <span></span> GREENFIELD <span></span> V1.0</p>
-      </div>
+      <span id="continue-note" class="sr-only">Chưa có hành trình được lưu</span>
     </section>
     <header class="hud top-hud">
       <div class="trainer-chip"><div class="avatar"><i class="trainer-mark"></i></div><div><b>Nhà huấn luyện</b><small>Lv. 01 · Greenfield</small></div></div>
