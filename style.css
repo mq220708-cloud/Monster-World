@@ -127,3 +127,57 @@
 .image-title-screen .continue-hotspot:disabled:after{content:"";position:absolute;inset:0;border-radius:12px;background:#30261c30}
 .sr-only{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
 @media(max-height:700px){.image-title-screen .title-hotspot{height:8.6%}}
+
+
+/* Living title screen: gentle camera drift, magical motes and warm light */
+.image-title-screen{overflow:hidden;isolation:isolate}
+.image-title-screen .title-art{
+  transform:scale(1.025);
+  transform-origin:50% 48%;
+  animation:title-camera-drift 24s ease-in-out infinite alternate;
+  will-change:transform,filter
+}
+.image-title-screen:before{
+  content:"";position:absolute;inset:-20%;z-index:1;pointer-events:none;
+  background:
+    radial-gradient(ellipse at 18% 27%,#fff4b52b 0,transparent 29%),
+    radial-gradient(ellipse at 78% 58%,#8be8e04a 0,transparent 31%),
+    linear-gradient(115deg,transparent 35%,#fff8d00d 49%,transparent 62%);
+  background-size:100% 100%,100% 100%,220% 100%;
+  animation:title-light-breathe 9s ease-in-out infinite alternate,title-light-sweep 18s linear infinite
+}
+.image-title-screen .title-atmosphere{position:absolute;inset:0;z-index:2;overflow:hidden;pointer-events:none}
+.image-title-screen .title-atmosphere i{
+  position:absolute;left:var(--x);top:var(--y);width:5px;height:5px;
+  background:#fff3b7;transform:rotate(45deg);opacity:0;
+  box-shadow:0 0 7px 2px #fff0a8a8,0 0 17px 5px #8ce8d65c;
+  animation:magic-mote var(--duration) ease-in-out var(--delay) infinite
+}
+.image-title-screen .title-atmosphere i:nth-child(1){--x:13%;--y:39%;--duration:7s;--delay:-2s}
+.image-title-screen .title-atmosphere i:nth-child(2){--x:28%;--y:22%;--duration:8s;--delay:-5s;width:3px;height:3px}
+.image-title-screen .title-atmosphere i:nth-child(3){--x:73%;--y:31%;--duration:9s;--delay:-1s}
+.image-title-screen .title-atmosphere i:nth-child(4){--x:87%;--y:46%;--duration:7.5s;--delay:-4s;width:4px;height:4px}
+.image-title-screen .title-atmosphere i:nth-child(5){--x:19%;--y:69%;--duration:10s;--delay:-7s;width:3px;height:3px}
+.image-title-screen .title-atmosphere i:nth-child(6){--x:80%;--y:73%;--duration:8.5s;--delay:-3s}
+.image-title-screen .title-atmosphere i:nth-child(7){--x:48%;--y:17%;--duration:9.5s;--delay:-6s;width:3px;height:3px}
+.image-title-screen .title-atmosphere i:nth-child(8){--x:61%;--y:84%;--duration:7s;--delay:-1.5s;width:4px;height:4px}
+.image-title-screen .title-atmosphere i:nth-child(9){--x:7%;--y:56%;--duration:11s;--delay:-8s;width:3px;height:3px}
+.image-title-screen .title-atmosphere i:nth-child(10){--x:94%;--y:22%;--duration:8s;--delay:-5.5s;width:3px;height:3px}
+.image-title-screen .title-hotspots{z-index:4}
+.image-title-screen .title-hotspot{transition:filter .2s ease,transform .2s ease}
+.image-title-screen .title-hotspot:active:not(:disabled){filter:brightness(1.2)}
+@keyframes title-camera-drift{
+  0%{transform:scale(1.025) translate3d(0,0,0);filter:saturate(1)}
+  100%{transform:scale(1.075) translate3d(-.35%,.25%,0);filter:saturate(1.08) brightness(1.025)}
+}
+@keyframes title-light-breathe{0%{opacity:.35}100%{opacity:.9}}
+@keyframes title-light-sweep{0%{background-position:0 0,0 0,150% 0}100%{background-position:0 0,0 0,-70% 0}}
+@keyframes magic-mote{
+  0%,100%{opacity:0;translate:0 9px;scale:.55}
+  25%{opacity:.9}
+  55%{opacity:.45;translate:5px -15px;scale:1}
+  80%{opacity:.85}
+}
+@media(prefers-reduced-motion:reduce){
+  .image-title-screen .title-art,.image-title-screen:before,.image-title-screen .title-atmosphere i{animation:none!important}
+}
