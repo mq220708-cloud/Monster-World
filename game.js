@@ -9,7 +9,7 @@
   const TILE = 24, MAP_W = 48, MAP_H = 48;
   const SAVE_KEY = 'monsterWorld.phase1.save.v1';
   let viewW = 360, viewH = 640, dpr = 1, last = 0, toastTimer = 0;
-  let keys = new Set(), joy = {x:0,y:0}, interactCooldown = 0;
+  let keys = new Set(), joy = {x:0,y:0}, interactCooldown = 0, gameStarted = false;
   const map = Array.from({length:MAP_H}, (_, y) => Array.from({length:MAP_W}, (_, x) => {
     if (x < 2 || y < 2 || x > MAP_W-3 || y > MAP_H-3) return 2;
     if ((x-34)**2+(y-12)**2 < 36) return 3;
@@ -31,9 +31,14 @@
   for(let y=7;y<43;y++) for(let x=6;x<43;x++) if(Math.random()<.065 && map[y][x]===0 && !objects.some(o=>Math.abs(o.x-x)<2&&Math.abs(o.y-y)<2)) objects.push({type:'tree',x,y});
   const player = {x:25.5*TILE,y:27*TILE,speed:118,faceX:0,faceY:1,walk:0};
   const saved = loadSave();
-  if(saved){player.x=saved.x;player.y=saved.y;}
+  const hasValidSave = !!(saved && Number.isFinite(saved.x) && Number.isFinite(saved.y));
+  const titleScreen = document.getElementById('title-screen');
+  const continueButton = document.getElementById('continue-button');
+  const continueNote = document.getElementById('continue-note');
+  if (!hasValidSave) { continueButton.disabled = true; }
+  else { continueButton.disabled = false; continueNote.textContent = 'Dữ liệu đã lưu trên thiết bị này'; }
   function loadSave(){try{return JSON.parse(localStorage.getItem(SAVE_KEY)||'null')}catch{return null}}
-  function save(){try{localStorage.setItem(SAVE_KEY,JSON.stringify({x:player.x,y:player.y,version:1,updatedAt:Date.now()}));document.getElementById('save-status').textContent='Đã lưu';}catch{document.getElementById('save-status').textContent='Không lưu được';}}
+  function save(){if(!gameStarted)return;try{localStorage.setItem(SAVE_KEY,JSON.stringify({x:player.x,y:player.y,version:1,updatedAt:Date.now()}));document.getElementById('save-status').textContent='Đã lưu';}catch{document.getElementById('save-status').textContent='Không lưu được';}}
   function resize(){const r=shell.getBoundingClientRect();viewW=r.width;viewH=r.height;dpr=Math.min(window.devicePixelRatio||1,2);canvas.width=Math.round(viewW*dpr);canvas.height=Math.round(viewH*dpr);ctx.imageSmoothingEnabled=false;}
   function toast(msg){toastEl.textContent=msg;toastEl.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>toastEl.classList.remove('show'),1800)}
   function tileAt(px,py){const x=Math.floor(px/TILE),y=Math.floor(py/TILE);if(x<0||y<0||x>=MAP_W||y>=MAP_H)return 2;return map[y][x]}
@@ -50,12 +55,24 @@
     ctx.strokeStyle='#fff2c044';ctx.lineWidth=1;ctx.strokeRect(viewW/2-13,worldViewH/2-13,26,26);
   }
   function update(dt){let x=joy.x,y=joy.y;if(keys.has('ArrowLeft')||keys.has('a'))x-=1;if(keys.has('ArrowRight')||keys.has('d'))x+=1;if(keys.has('ArrowUp')||keys.has('w'))y-=1;if(keys.has('ArrowDown')||keys.has('s'))y+=1;const len=Math.hypot(x,y);if(len>1){x/=len;y/=len}if(len>.08){player.faceX=x;player.faceY=y;player.walk+=dt*12;const nx=player.x+x*player.speed*dt,ny=player.y+y*player.speed*dt;if(!blocked(nx,player.y))player.x=nx;if(!blocked(player.x,ny))player.y=ny;}interactCooldown=Math.max(0,interactCooldown-dt);}
-  function loop(t){const dt=Math.min((t-last)/1000||0,.04);last=t;update(dt);render();requestAnimationFrame(loop)}
+  function loop(t){const dt=Math.min((t-last)/1000||0,.04);last=t;if(gameStarted)update(dt);render();requestAnimationFrame(loop)}
   function nearestObject(){return objects.filter(o=>o.name).map(o=>({o,d:Math.hypot((o.x+.5)*TILE-player.x,(o.y+.5)*TILE-player.y)})).sort((a,b)=>a.d-b.d)[0]}
   function interact(){if(interactCooldown>0)return;interactCooldown=.35;const n=nearestObject();if(n&&n.d<62){if(n.o.type==='npc')openPanel('npc');else if(n.o.type==='sign')openPanel('sign');else openPanel('house')}else toast('Chưa có gì để tương tác ở gần đây.');}
   function openPanel(which){const content={npc:['Nhà nghiên cứu Mira','Chào mừng đến Greenfield! Phòng nghiên cứu đang chuẩn bị ba sinh vật đồng hành. Trong giai đoạn tiếp theo, bạn sẽ được chọn một người bạn đầu tiên.'],sign:['Bảng chỉ dẫn','Phía bắc: Đồng cỏ yên bình\nPhía đông: Hồ Azure\nPhía nam: Lối ra Greenfield'],house:['Ngôi nhà nhỏ','Đây sẽ là nơi nghỉ ngơi và lưu tiến trình của bạn. Dữ liệu hiện được lưu tự động trên thiết bị này.'],team:['Đội hình','Bạn chưa nhận sinh vật khởi đầu. Hệ thống chọn sinh vật và quản lý đội hình sẽ được bổ sung ở Phase 2.'],bag:['Túi đồ','Túi đồ hiện đang trống. Hệ thống vật phẩm sẽ được bổ sung sau.'],dex:['Sổ sinh vật','Bạn chưa ghi nhận sinh vật nào. Hãy khám phá để hoàn thành bộ sưu tập!'],map:['Bản đồ Greenfield','Bạn đang ở khu vực làng Greenfield. Hãy khám phá con đường, hồ nước và phòng nghiên cứu.']}[which]||['Monster World',''];modalContent.innerHTML=`<h2>${content[0]}</h2><p>${content[1].replaceAll('\n','<br>')}</p><button class="modal-action" id="modal-ok">Đã hiểu</button>`;modal.classList.remove('hidden');document.getElementById('modal-ok').onclick=()=>modal.classList.add('hidden')}
+  function enterWorld(continuePrevious){
+    if(continuePrevious && hasValidSave){player.x=saved.x;player.y=saved.y;}
+    else {player.x=25.5*TILE;player.y=27*TILE;player.walk=0;try{localStorage.removeItem(SAVE_KEY);}catch{}}
+    gameStarted=true;titleScreen.classList.add('hidden');
+    toast(continuePrevious?'Đã tiếp tục hành trình của bạn.':'Chào mừng đến Greenfield!');
+  }
+  document.getElementById('start-button').addEventListener('click',()=>enterWorld(false));
+  continueButton.addEventListener('click',()=>enterWorld(true));
+  document.getElementById('settings-button').addEventListener('click',()=>{
+    modalContent.innerHTML='<h2>Cài đặt</h2><p><b>Lưu tiến trình:</b> Tự động lưu trên thiết bị này.</p><p><b>Điều khiển:</b> Cần ảo trên màn hình hoặc phím WASD / phím mũi tên.</p><p><b>Âm thanh:</b> Sẽ được bổ sung trong bản cập nhật sau.</p><button class="modal-action" id="modal-ok">Đóng</button>';
+    modal.classList.remove('hidden');document.getElementById('modal-ok').onclick=()=>modal.classList.add('hidden');
+  });
   document.getElementById('close-modal').onclick=()=>modal.classList.add('hidden');document.getElementById('interact').addEventListener('pointerdown',e=>{e.preventDefault();interact()});document.getElementById('team-button').onclick=()=>openPanel('team');document.querySelectorAll('.nav-button').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.nav-button').forEach(x=>x.classList.remove('active'));b.classList.add('active');openPanel(b.dataset.panel)}));
   window.addEventListener('keydown',e=>{if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight',' '].includes(e.key))e.preventDefault();keys.add(e.key.toLowerCase())});window.addEventListener('keyup',e=>keys.delete(e.key.toLowerCase()));window.addEventListener('blur',()=>keys.clear());
   const joystick=document.getElementById('joystick'),stick=document.getElementById('stick');let pointer=null;function setJoy(e){const r=joystick.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;let dx=e.clientX-cx,dy=e.clientY-cy;const max=35,l=Math.hypot(dx,dy);if(l>max){dx=dx/l*max;dy=dy/l*max}joy.x=dx/max;joy.y=dy/max;stick.style.transform=`translate(${dx}px,${dy}px)`}joystick.addEventListener('pointerdown',e=>{pointer=e.pointerId;joystick.setPointerCapture(pointer);setJoy(e)});joystick.addEventListener('pointermove',e=>{if(e.pointerId===pointer)setJoy(e)});function release(e){if(e.pointerId===pointer){pointer=null;joy.x=joy.y=0;stick.style.transform='translate(0,0)'}}joystick.addEventListener('pointerup',release);joystick.addEventListener('pointercancel',release);
-  window.addEventListener('resize',resize);document.addEventListener('visibilitychange',()=>{if(document.hidden)save()});setInterval(save,10000);resize();toast(saved?'Đã tải tiến trình đã lưu.':'Chào mừng đến Greenfield!');requestAnimationFrame(loop);
+  window.addEventListener('resize',resize);document.addEventListener('visibilitychange',()=>{if(document.hidden)save()});setInterval(save,10000);resize();requestAnimationFrame(loop);
 })();
