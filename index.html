@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+  <meta name="theme-color" content="#17251d">
+  <title>Monster World – Greenfield</title>
+  <link rel="stylesheet" href="src/style.css">
+</head>
+<body>
+  <main id="game-shell" aria-label="Monster World">
+    <canvas id="game" aria-label="Bản đồ Greenfield"></canvas>
+    <header class="hud top-hud">
+      <div class="trainer-chip"><div class="avatar">✦</div><div><b>Nhà huấn luyện</b><small>Lv. 01 · Greenfield</small></div></div>
+      <div class="save-chip"><span class="save-dot"></span><span id="save-status">Đã lưu</span></div>
+    </header>
+    <div class="location-pill"><span>☀</span> <b>GREENFIELD</b><small id="clock-label">Ngày 1 · 08:00</small></div>
+    <section class="bottom-panel">
+      <div class="companion-row">
+        <div class="companion-icon">🌱</div>
+        <div class="companion-info"><b>Spriglet</b><small>Sinh vật đồng hành · Lv. 5</small><div class="xp"><i></i></div></div>
+        <button id="team-button" class="mini-button" aria-label="Đội hình">◈</button>
+      </div>
+      <nav class="nav-row" aria-label="Điều hướng">
+        <button class="nav-button active" data-panel="map"><span>⌖</span><small>Bản đồ</small></button>
+        <button class="nav-button" data-panel="team"><span>♧</span><small>Đội hình</small></button>
+        <button class="nav-button" data-panel="bag"><span>▣</span><small>Túi đồ</small></button>
+        <button class="nav-button" data-panel="dex"><span>▤</span><small>Sổ sinh vật</small></button>
+      </nav>
+    </section>
+    <div class="controls" aria-label="Điều khiển di chuyển">
+      <div id="joystick" class="joystick"><div id="stick" class="stick"></div></div>
+      <button id="interact" class="interact-button">A<br><small>Tương tác</small></button>
+    </div>
+    <div id="toast" class="toast" role="status"></div>
+    <div id="modal" class="modal hidden" role="dialog" aria-modal="true">
+      <div class="modal-card"><button id="close-modal" class="close">×</button><div id="modal-content"></div></div>
+    </div>
+    <div class="help-hint">Di chuyển bằng cần ảo hoặc phím WASD / ↑ ↓ ← →</div>
+  </main>
+  <script src="src/game.js"></script>
+</body>
+</html>
