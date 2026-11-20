@@ -10,22 +10,60 @@
 <body>
   <main id="game-shell" aria-label="Monster World">
     <canvas id="game" aria-label="Bản đồ Greenfield"></canvas>
+    <section id="title-screen" class="title-screen" aria-label="Màn hình mở đầu Monster World">
+      <div class="title-sky" aria-hidden="true">
+        <div class="title-sun"></div>
+        <div class="title-cloud cloud-a"></div>
+        <div class="title-cloud cloud-b"></div>
+        <div class="title-mountain mountain-far"></div>
+        <div class="title-mountain mountain-near"></div>
+        <div class="title-forest"></div>
+        <div class="title-ground"></div>
+      </div>
+      <div class="title-content">
+        <p class="title-kicker">MỘT THẾ GIỚI ĐANG THỨC TỈNH</p>
+        <h1 class="game-logo"><span>MONSTER</span><strong>WORLD</strong></h1>
+        <p class="title-subtitle">Khám phá · Kết bạn · Trưởng thành</p>
+        <div class="title-showcase" aria-hidden="true">
+          <div class="showcase-glow"></div>
+          <div class="pixel-sprout">
+            <i class="sprout-leaf leaf-left"></i>
+            <i class="sprout-leaf leaf-right"></i>
+            <i class="sprout-body"></i>
+            <i class="sprout-cheek cheek-left"></i>
+            <i class="sprout-cheek cheek-right"></i>
+            <i class="sprout-eye eye-left"></i>
+            <i class="sprout-eye eye-right"></i>
+            <i class="sprout-foot foot-left"></i>
+            <i class="sprout-foot foot-right"></i>
+          </div>
+          <span class="showcase-name">NHỮNG NGƯỜI BẠN ĐANG CHỜ</span>
+        </div>
+        <nav class="title-menu" aria-label="Menu chính">
+          <button id="start-button" class="menu-button primary">BẮT ĐẦU HÀNH TRÌNH</button>
+          <button id="continue-button" class="menu-button secondary" disabled>TIẾP TỤC</button>
+          <small id="continue-note" class="continue-note">Chưa có hành trình được lưu</small>
+          <button id="settings-button" class="menu-button text-button">CÀI ĐẶT</button>
+        </nav>
+        <p class="title-footer">AETHERIA <span></span> GREENFIELD <span></span> V1.0</p>
+      </div>
+    </section>
     <header class="hud top-hud">
-      <div class="trainer-chip"><div class="avatar">✦</div><div><b>Nhà huấn luyện</b><small>Lv. 01 · Greenfield</small></div></div>
+      <div class="trainer-chip"><div class="avatar"><i class="trainer-mark"></i></div><div><b>Nhà huấn luyện</b><small>Lv. 01 · Greenfield</small></div></div>
       <div class="save-chip"><span class="save-dot"></span><span id="save-status">Đã lưu</span></div>
     </header>
-    <div class="location-pill"><span>☀</span> <b>GREENFIELD</b><small id="clock-label">Ngày 1 · 08:00</small></div>
+    <div class="location-pill"><span class="sun-mark"></span> <b>GREENFIELD</b><small id="clock-label">Ngày 1 · 08:00</small></div>
     <section class="bottom-panel">
       <div class="companion-row">
-        <div class="companion-icon">🌱</div>
+        <div class="companion-icon"><i class="sprout-mark"></i></div>
         <div class="companion-info"><b>Spriglet</b><small>Sinh vật đồng hành · Lv. 5</small><div class="xp"><i></i></div></div>
-        <button id="team-button" class="mini-button" aria-label="Đội hình">◈</button>
+        <button id="team-button" class="mini-button" aria-label="Đội hình">ĐỘI</button>
       </div>
       <nav class="nav-row" aria-label="Điều hướng">
-        <button class="nav-button active" data-panel="map"><span>⌖</span><small>Bản đồ</small></button>
-        <button class="nav-button" data-panel="team"><span>♧</span><small>Đội hình</small></button>
-        <button class="nav-button" data-panel="bag"><span>▣</span><small>Túi đồ</small></button>
-        <button class="nav-button" data-panel="dex"><span>▤</span><small>Sổ sinh vật</small></button>
+        <button class="nav-button active" data-panel="map"><i class="nav-art map-art" aria-hidden="true"></i><small>Bản đồ</small></button>
+        <button class="nav-button" data-panel="team"><i class="nav-art team-art" aria-hidden="true"></i><small>Đội hình</small></button>
+        <button class="nav-button" data-panel="bag"><i class="nav-art bag-art" aria-hidden="true"></i><small>Túi đồ</small></button>
+        <button class="nav-button" data-panel="dex"><i class="nav-art dex-art" aria-hidden="true"></i><small>Sổ sinh vật</small></button>
       </nav>
     </section>
     <div class="controls" aria-label="Điều khiển di chuyển">
@@ -34,7 +72,7 @@
     </div>
     <div id="toast" class="toast" role="status"></div>
     <div id="modal" class="modal hidden" role="dialog" aria-modal="true">
-      <div class="modal-card"><button id="close-modal" class="close">×</button><div id="modal-content"></div></div>
+      <div class="modal-card"><button id="close-modal" class="close" aria-label="Đóng"><i class="close-mark"></i></button><div id="modal-content"></div></div>
     </div>
     <div class="help-hint">Di chuyển bằng cần ảo hoặc phím WASD / ↑ ↓ ← →</div>
   </main>
